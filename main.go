@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 
 	markdown "github.com/WhoMeNope/k8b-render/markdown"
@@ -29,13 +31,25 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// render and serve
-	log.Print(string(data))
+	// render
+	fmt.Println(string(data))
 
 	rendered, err := markdown.Render(data)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Print(rendered.String())
+	fmt.Print("RENDERED AS:\n\n")
+
+	fmt.Println(rendered.String())
+
+	// serve
+	http.Handle("/", http.HandlerFunc(
+		func(w http.ResponseWriter, r *http.Request) {
+			w.Write(rendered.Bytes())
+		},
+	))
+
+	fmt.Println("SERVING AT:\nhttp://localhost:5000/")
+	log.Fatal(http.ListenAndServe(":5000", nil))
 }
