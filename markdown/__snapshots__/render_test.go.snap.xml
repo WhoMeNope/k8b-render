@@ -1,0 +1,8 @@
+<Snaps>
+    <Snap label="basic">
+        "\u003ch1 id=\"title\"\u003eTitle\u003c/h1\u003e\n"
+    </Snap>
+    <Snap label="multiline">
+        "\u003ch1 id=\"title\"\u003eTitle\u003c/h1\u003e\n\u003cp\u003eContent\u003c/p\u003e\n"
+    </Snap>
+</Snaps>
