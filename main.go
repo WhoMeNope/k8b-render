@@ -4,6 +4,8 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+
+	markdown "github.com/WhoMeNope/k8b-render/markdown"
 )
 
 func main() {
@@ -29,4 +31,11 @@ func main() {
 
 	// render and serve
 	log.Print(string(data))
+
+	rendered, err := markdown.Render(data)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Print(rendered.String())
 }
