@@ -15,6 +15,10 @@ import (
 func Render(source []byte) ([]byte, error) {
 	var css bytes.Buffer
 
+	// Do this once for each unique policy, and use the policy for the life of the program
+	// Policy creation/editing is not safe to use in multiple goroutines
+	p := bluemonday.UGCPolicy()
+
 	md := goldmark.New(
 		goldmark.WithExtensions(
 			extension.GFM,
@@ -40,17 +44,12 @@ func Render(source []byte) ([]byte, error) {
 	)
 
 	var buf bytes.Buffer
-	if err := md.Convert(source, &buf); err != nil {
+	if err := md.Convert(p.SanitizeBytes(source), &buf); err != nil {
 		return nil, err
 	}
 
-	// Do this once for each unique policy, and use the policy for the life of the program
-	// Policy creation/editing is not safe to use in multiple goroutines
-	p := bluemonday.UGCPolicy()
-	p.AllowAttrs("class").Globally()
-
 	var output bytes.Buffer
-	_, err := fmt.Fprintf(&output, "<style>\n%s</style>\n%s", css.Bytes(), p.SanitizeBytes(buf.Bytes()))
+	_, err := fmt.Fprintf(&output, "<style>\n%s</style>\n%s", css.Bytes(), buf.Bytes())
 	if err != nil {
 		return nil, err
 	}
