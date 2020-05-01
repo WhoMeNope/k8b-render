@@ -35,3 +35,7 @@ if err != nil {
 fmt.Println(rendered.String())
 ```
 
+## Internals
+
+Uses [chroma](https://github.com/alecthomas/chroma) for code snippet highlighting.
+
