@@ -31,10 +31,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// render
 	fmt.Println(string(data))
 
-	rendered, err := markdown.Render(data)
+	// render
+	rendered, err := markdown.NewRenderer().Render(data)
 	if err != nil {
 		log.Fatal(err)
 	}

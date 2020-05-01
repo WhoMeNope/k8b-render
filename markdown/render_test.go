@@ -49,10 +49,12 @@ var testCases = map[string]string{
 
 // TestRender executes all testCases for Render by checking with snapshots.
 func TestRender(t *testing.T) {
+	render := NewRenderer()
+
 	// iterate over all tests
 	for name, input := range testCases {
 		t.Run(name, func(t *testing.T) {
-			actual, err := Render([]byte(input))
+			actual, err := render.Render([]byte(input))
 			if err != nil {
 				t.Fatal(err)
 			}
