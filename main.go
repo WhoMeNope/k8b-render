@@ -41,12 +41,12 @@ func main() {
 
 	fmt.Print("RENDERED AS:\n\n")
 
-	fmt.Println(rendered.String())
+	fmt.Println(string(rendered))
 
 	// serve
 	http.Handle("/", http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
-			w.Write(rendered.Bytes())
+			w.Write(rendered)
 		},
 	))
 

@@ -57,7 +57,7 @@ func TestRender(t *testing.T) {
 				t.Fatal(err)
 			}
 
-			cupaloy.SnapshotT(t, actual.String())
+			cupaloy.SnapshotT(t, string(actual))
 		})
 	}
 }

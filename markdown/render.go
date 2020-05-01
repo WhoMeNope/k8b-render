@@ -3,13 +3,14 @@ package render
 import (
 	"bytes"
 	"github.com/alecthomas/chroma/formatters/html"
+	"github.com/microcosm-cc/bluemonday"
 	"github.com/yuin/goldmark"
 	"github.com/yuin/goldmark-highlighting"
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/parser"
 )
 
-func Render(source []byte) (bytes.Buffer, error) {
+func Render(source []byte) ([]byte, error) {
 	md := goldmark.New(
 		goldmark.WithExtensions(
 			extension.GFM,
@@ -33,8 +34,12 @@ func Render(source []byte) (bytes.Buffer, error) {
 
 	var buf bytes.Buffer
 	if err := md.Convert(source, &buf); err != nil {
-		return buf, err
+		return nil, err
 	}
 
-	return buf, nil
+	// Do this once for each unique policy, and use the policy for the life of the program
+	// Policy creation/editing is not safe to use in multiple goroutines
+	p := bluemonday.UGCPolicy()
+
+	return p.SanitizeBytes(buf.Bytes()), nil
 }
