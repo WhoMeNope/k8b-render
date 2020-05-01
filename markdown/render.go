@@ -10,12 +10,19 @@ import (
 	"github.com/yuin/goldmark-highlighting"
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/parser"
+
+	"github.com/WhoMeNope/k8b-render/common"
 )
 
+// MarkdownRenderer defines a Renderer for markdown files
 type MarkdownRenderer struct {
 	policy *bluemonday.Policy
 }
 
+// check if satisfies common.Renderer interface
+var _ common.Renderer = MarkdownRenderer{}
+
+// NewRenderer creates and sets-up a new MarkdownRenderer
 func NewRenderer() MarkdownRenderer {
 	// Do this once for each unique policy, and use the policy for the life of the program
 	// Policy creation/editing is not safe to use in multiple goroutines
@@ -26,6 +33,7 @@ func NewRenderer() MarkdownRenderer {
 	}
 }
 
+// Render renders markdown as HTML
 func (r MarkdownRenderer) Render(source []byte) ([]byte, error) {
 	var css bytes.Buffer
 
