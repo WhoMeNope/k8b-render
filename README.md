@@ -30,11 +30,11 @@ import (
 ```
 
 ```go
-rendered, err := markdown.Render(data)
+rendered, err := markdown.NewRenderer().Render(data)
 if err != nil {
     log.Fatal(err)
 }
-fmt.Println(rendered.String())
+fmt.Println(string(rendered))
 ```
 
 ## Internals

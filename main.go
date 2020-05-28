@@ -40,7 +40,6 @@ func main() {
 	}
 
 	fmt.Print("RENDERED AS:\n\n")
-
 	fmt.Println(string(rendered))
 
 	// serve
