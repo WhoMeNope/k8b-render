@@ -1,3 +1,5 @@
+**ARCHIVED : this project was merged into [k8b](https://github.com/WhoMeNope/k8b).**
+
 # k8b-render
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/WhoMeNope/k8b-render)](https://goreportcard.com/report/github.com/WhoMeNope/k8b-render)
